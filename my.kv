@@ -1,0 +1,373 @@
+#:import SlideTransition kivy.uix.screenmanager.SlideTransition
+#:import NoTransition kivy.uix.screenmanager.NoTransition
+
+<Label@Label>:
+    font_name: "Roboto-Regular.ttf"
+    color: 0.44921875, 0.44921875, 0.44921875, 1
+
+<Button@Button>:
+    background_normal: "whitebutton.png"
+    background_down: "whitebutton2.png"
+
+<KeypadButton@Button>:
+    font_size: "24dp"
+
+<MainLayout>:
+    ScreenManager:
+        id: main
+
+        Screen:
+            name: "menu"
+            BoxLayout:
+                orientation: "vertical"
+
+                BoxLayout:
+                    orientation: "vertical"
+                    size_hint_y: None
+                    height: "196dp"
+                    padding: "16dp"
+                    spacing: "24dp"
+                    canvas.before:
+                        Color:
+                            rgba: 0.546875, 0.765625, 0.29296875, 1
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+                    BoxLayout:
+                        size_hint_y: 1.0
+                    BoxLayout:
+                        size_hint_y: None
+                        height: "80dp"
+                        padding: "8dp"
+                        Image:
+                            allow_stretch: True
+                            source: "pi.png"
+                    Label:
+                        font_size: "24dp"
+                        text: "Pithon"
+                        color: [1, 1, 1, 1]
+                    BoxLayout:
+                        size_hint_y: 1.0
+
+                BoxLayout:
+                    orientation: "vertical"
+                    size_hint_y: 1.0
+                    padding: "16dp"
+                    spacing: "16dp"
+                    canvas.before:
+                        Color:
+                            rgba: 0.93359375, 0.93359375, 0.93359375, 1
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+                    Button:
+                        text: "Start"
+                        size_hint_y: None
+                        height: "56dp"
+                        font_size: "20dp"
+                        on_press: other.transition = NoTransition(); other.current = "keypad"; actualpi.text = root.whatsthehaps(); score.text = "3"; main.transition = SlideTransition(direction="left"); main.current = "pi"
+                    Button:
+                        text: "Settings"
+                        size_hint_y: None
+                        height: "56dp"
+                        font_size: "20dp"
+                        on_press: main.transition = SlideTransition(direction="right"); main.current = "settings"
+                    Label:
+                        id: highscore
+                        text: "High score: " + str(root.whatsthehighscore())
+                        size_hint_y: None
+                        height: "56dp"
+                        font_size: "20dp"
+                    BoxLayout:
+                        size_hint_y: 1.0
+
+        Screen:
+            name: "pi"
+            BoxLayout:
+                id: layout
+                orientation: "vertical"
+                padding: [0, "32dp"]
+                canvas.before:
+                    Color:
+                        rgba: 0.93359375, 0.93359375, 0.93359375, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+                BoxLayout:
+                    orientation: "horizontal"
+                    size_hint_y: 0.25
+                    padding: "16dp"
+                    BoxLayout:
+                        size_hint_x: 1
+                    BoxLayout:
+                        size_hint_y: None
+                        size_hint_x: None
+                        width: "96dp"
+                        height: "96dp"
+                        canvas.before:
+                            Color:
+                                rgba: 0.546875, 0.765625, 0.29296875, 1
+                            Ellipse:
+                                size: (self.height, self.height)
+                                pos: self.pos
+                        Label:
+                            id: score
+                            text: "3"
+                            font_size: "48dp"
+                            color: 1, 1, 1, 1
+                    BoxLayout:
+                        size_hint_x: 1
+                BoxLayout:
+                    size_hint_y: 0.15
+                    padding: [0, "16dp"]
+                    Label:
+                        id: actualpi
+                        text: "3.14"
+                        font_size: "32dp"
+                        text_size: self.size
+                        valign: "middle"
+                        halign: "center"
+                        markup: True
+                ScreenManager:
+                    id: other
+                    size_hint_y: 0.6
+                    Screen:
+                        name: "keypad"
+                        GridLayout:
+                            cols: 3
+                            padding: "32dp"
+                            spacing: "4dp"
+                            KeypadButton:
+                                text: "1" * root.whatsup() or "7"
+                                id: omg1
+                                on_press: root.keypadpress(self.text)
+                            KeypadButton:
+                                text: "2" * root.whatsup() or "8"
+                                id: omg2
+                                on_press: root.keypadpress(self.text)
+                            KeypadButton:
+                                text: "3" * root.whatsup() or "9"
+                                id: omg3
+                                on_press: root.keypadpress(self.text)
+                            KeypadButton:
+                                text: "4"
+                                on_press: root.keypadpress(self.text)
+                            KeypadButton:
+                                text: "5"
+                                on_press: root.keypadpress(self.text)
+                            KeypadButton:
+                                text: "6"
+                                on_press: root.keypadpress(self.text)
+                            KeypadButton:
+                                text: "7" * root.whatsup() or "1"
+                                id: omg7
+                                on_press: root.keypadpress(self.text)
+                            KeypadButton:
+                                text: "8" * root.whatsup() or "2"
+                                id: omg8
+                                on_press: root.keypadpress(self.text)
+                            KeypadButton:
+                                text: "9" * root.whatsup() or "3"
+                                id: omg9
+                                on_press: root.keypadpress(self.text)
+                            Label:
+                                text: ""
+                            KeypadButton:
+                                text: "0"
+                                on_press: root.keypadpress(self.text)
+                            Label:
+                                text: ""
+                    Screen:
+                        name: "ripscreen"
+                        BoxLayout:
+                            orientation: "vertical"
+                            padding: "16dp"
+                            spacing: "16dp"
+                            Label:
+                                id: message
+                                text: "Well done!"
+                                font_size: "28dp"
+                            Button:
+                                text: "Try again!"
+                                size_hint_y: None
+                                height: "56dp"
+                                font_size: "20dp"
+                                on_press: main.transition = SlideTransition(direction="right"); highscore.text = "High score: " + str(root.whatsthehighscore()); main.current = "menu"
+                            Button:
+                                text: "Share"
+                                size_hint_y: None
+                                height: "56dp"
+                                font_size: "20dp"
+                                on_press: root.openshare(score.text)
+                            BoxLayout:
+                                size_hint_y: 1.0
+
+
+        Screen:
+            name: "settings"
+            BoxLayout:
+                orientation: "vertical"
+                canvas.before:
+                    Color:
+                        rgba: 0.93359375, 0.93359375, 0.93359375, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+                ScrollView:
+                    GridLayout:
+                        spacing: "16dp"
+                        padding: "16dp"
+                        cols: 1
+                        size_hint_y: None
+                        height: self.minimum_height
+                        Label:
+                            text: "Invert keypad"
+                            size_hint_y: None
+                            font_size: "20dp"
+                            text_size: self.size
+                            height: "28dp"
+                        BoxLayout:
+                            orientation: "horizontal"
+                            size_hint_y: None
+                            spacing: "16dp"
+                            height: "56dp"
+                            ToggleButton:
+                                id: invertyes
+                                group: "invert"
+                                text: "Yes"
+                                font_size: "20dp"
+                                state: "down" * root.getsettings()[0] or "normal"
+                                on_press: self.state = "down"
+                            ToggleButton:
+                                id: invertno
+                                group: "invert"
+                                text: "No"
+                                font_size: "20dp"
+                                state: "normal" * root.getsettings()[0] or "down"
+                                on_press: self.state = "down"
+                        Label:
+                            text: "Group"
+                            size_hint_y: None
+                            font_size: "20dp"
+                            text_size: self.size
+                            height: "28dp"
+                        BoxLayout:
+                            orientation: "horizontal"
+                            size_hint_y: None
+                            spacing: "16dp"
+                            height: "56dp"
+                            ToggleButton:
+                                id: g0
+                                group: "group"
+                                text: "0"
+                                font_size: "20dp"
+                                state: "down" * (root.getsettings()[1] == 0) or "normal"
+                                on_press: self.state = "down"
+                            ToggleButton:
+                                id: g3
+                                group: "group"
+                                text: "3"
+                                font_size: "20dp"
+                                state: "down" * (root.getsettings()[1] == 3) or "normal"
+                                on_press: self.state = "down"
+                            ToggleButton:
+                                id: g4
+                                group: "group"
+                                text: "4"
+                                font_size: "20dp"
+                                state: "down" * (root.getsettings()[1] == 4) or "normal"
+                                on_press: self.state = "down"
+                            ToggleButton:
+                                id: g5
+                                group: "group"
+                                text: "5"
+                                font_size: "20dp"
+                                state: "down" * (root.getsettings()[1] == 5) or "normal"
+                                on_press: self.state = "down"
+                        Label:
+                            text: "Shift"
+                            size_hint_y: None
+                            font_size: "20dp"
+                            text_size: self.size
+                            height: "28dp"
+                        BoxLayout:
+                            orientation: "horizontal"
+                            size_hint_y: None
+                            spacing: "16dp"
+                            height: "56dp"
+                            ToggleButton:
+                                id: s0
+                                group: "shift"
+                                text: "0"
+                                font_size: "20dp"
+                                state: "down" * (root.getsettings()[2] == 0) or "normal"
+                                on_press: self.state = "down"
+                            ToggleButton:
+                                id: s1
+                                group: "shift"
+                                text: "1"
+                                font_size: "20dp"
+                                state: "down" * (root.getsettings()[2] == 1) or "normal"
+                                on_press: self.state = "down"
+                            ToggleButton:
+                                id: s2
+                                group: "shift"
+                                text: "2"
+                                font_size: "20dp"
+                                state: "down" * (root.getsettings()[2] == 2) or "normal"
+                                on_press: self.state = "down"
+                        Label:
+                            text: "Number"
+                            size_hint_y: None
+                            font_size: "20dp"
+                            text_size: self.size
+                            height: "28dp"
+                        BoxLayout:
+                            orientation: "horizontal"
+                            size_hint_y: None
+                            spacing: "16dp"
+                            height: "56dp"
+                            ToggleButton:
+                                id: pi1
+                                group: "number"
+                                text: "pi"
+                                font_size: "20dp"
+                                state: "down" * (root.getsettings()[3] == "pi") or "normal"
+                                on_press: self.state = "down"
+                            ToggleButton:
+                                id: pi2
+                                group: "number"
+                                text: "tau"
+                                font_size: "20dp"
+                                state: "down" * (root.getsettings()[3] == "tau") or "normal"
+                                on_press: self.state = "down"
+                            ToggleButton:
+                                id: pi3
+                                group: "number"
+                                text: "e"
+                                font_size: "20dp"
+                                state: "down" * (root.getsettings()[3] == "e") or "normal"
+                                on_press: self.state = "down"
+                            ToggleButton:
+                                id: pi4
+                                group: "number"
+                                text: "phi"
+                                font_size: "20dp"
+                                state: "down" * (root.getsettings()[3] == "phi") or "normal"
+                                on_press: self.state = "down"
+                            ToggleButton:
+                                id: pi5
+                                group: "number"
+                                text: "√2"
+                                font_size: "20dp"
+                                state: "down" * (root.getsettings()[3] == "sqrt(2)") or "normal"
+                                on_press: self.state = "down"
+                BoxLayout:
+                    padding: "16dp"
+                    size_hint_y: None
+                    Button:
+                        text: "Back"
+                        font_size: "20dp"
+                        height: "56dp"
+                        size_hint_y: None
+                        on_press: root.updatesettings(invertyes.state == "down", int("0" * (g0.state == "down") + "3" * (g3.state == "down") + "4" * (g4.state == "down") + "5" * (g5.state == "down")), int("0" * (s0.state == "down") + "1" * (s1.state == "down") + "2" * (s2.state == "down")), "pi" * (pi1.state == "down") + "tau" * (pi2.state == "down") + "e" * (pi3.state == "down") + "phi" * (pi4.state == "down") + "sqrt(2)" * (pi5.state == "down")); main.transition = SlideTransition(direction="left"); omg1.text = "1" * root.whatsup() or "7"; omg2.text = "2" * root.whatsup() or "8"; omg3.text = "3" * root.whatsup() or "9"; omg7.text = "7" * root.whatsup() or "1"; omg8.text = "8" * root.whatsup() or "2"; omg9.text = "9" * root.whatsup() or "3"; highscore.text = "High score: " + str(root.whatsthehighscore()); main.current = "menu"
